@@ -38,11 +38,12 @@ http {
         #server_name rhdzmota-notebooks.up.railway.app;
         
 	location /notebooks {
+	    set $rhdzmota_server_notebooks rhdzmota-notebooks.railway.internal;
 	    proxy_set_header X-Real-IP $remote_addr;
 	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 	    proxy_set_header Host $http_host;
 	    proxy_set_header X-Nginx-Proxy true;
-	    proxy_pass http://rhdzmota-notebooks.railway.internal:3000;
+	    proxy_pass http://$rhdzmota_server_notebooks;
 	}
     }
 
@@ -53,8 +54,6 @@ http {
 	
 	root /usr/share/nginx/html;
 	index index.html;
-
-	
 
 	location / {
 	    try_files $uri $uri/ =404;
