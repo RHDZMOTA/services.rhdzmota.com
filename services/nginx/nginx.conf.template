@@ -39,6 +39,10 @@ http {
 	root /usr/share/nginx/html;
 	index index.html;
 
+	location /notebooks {
+	    proxy_pass http://rhdzmota-notebooks.railway.internal;
+	}
+
 	location / {
 	    try_files $uri $uri/ =404;
         }
