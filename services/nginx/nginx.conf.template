@@ -1,0 +1,49 @@
+user  nginx;
+
+# Automatically adjust the number of Nginx worker processes based on available cores.
+worker_processes auto;
+
+# daemon off;  # run in foreground
+
+events {
+    # You can calculate t he max_clients value by knowing the worker_processes & worker_connections
+    # max_clients = worker_processes * worker_connections
+    worker_connections  4096;  # Default: 1024
+}
+
+http {
+    # Contain all types of file extensions like .jpg .png .txt .html
+    include /etc/nginx/mime.types; 
+    # Set default MIME type that doesn't have an explicitly defined type.
+    default_type  application/octet-stream;
+    # Set the location and format for the log files.
+    # It will keep every single request log with details.
+    access_log /dev/stdout;
+    error_log /dev/stdout;
+    # Permission to send file system calls so that static files can be served efficiently.
+    # You can deactivate this setting if only being used as a reverse proxy.
+    sendfile     on;
+
+    # Set a timeout (seconds) for keep-alive client connections; by default, 65 seconds
+    keepalive_timeout  120;
+
+    # Allows to specify the max MB on client file upload; by default 1 MB (1M)
+    # Exceeding this value results in the following error: Entity Too Large
+    client_max_body_size 50M;
+
+    server {
+    	listen ${PORT};
+        listen [::]:${PORT};
+        server_name localhost;
+	
+	root /usr/share/nginx/html;
+	index index.html;
+
+	location / {
+	    try_files $uri $uri/ =404;
+        }
+
+    }
+
+}
+
