@@ -33,6 +33,7 @@ http {
 
     server {
 	listen ${PORT};
+        listen [::]:${PORT};
         server_name rhdzmota-notebooks.up.railway.app;
         
 	location /notebooks {
