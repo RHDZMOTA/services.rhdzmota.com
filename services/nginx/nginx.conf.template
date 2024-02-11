@@ -38,6 +38,7 @@ http {
         #server_name rhdzmota-notebooks.up.railway.app;
         
 	location /notebooks {
+	    resolver 127.0.0.11 ipv6=off;
 	    set $rhdzmota_server_notebooks rhdzmota-notebooks.railway.internal;
 	    proxy_set_header X-Real-IP $remote_addr;
 	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
