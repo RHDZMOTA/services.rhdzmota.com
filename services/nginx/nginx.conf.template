@@ -34,7 +34,8 @@ http {
     server {
 	listen ${PORT};
         listen [::]:${PORT};
-        server_name rhdzmota-notebooks.up.railway.app;
+	server_name localhost;
+        #server_name rhdzmota-notebooks.up.railway.app;
         
 	location /notebooks {
 	    proxy_set_header X-Real-IP $remote_addr;
