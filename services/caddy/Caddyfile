@@ -1,0 +1,45 @@
+{
+    # Global options
+
+    # Railway environment foes not requires admin
+    admin off
+
+    # Storage isn't persistent anyway
+    persist_config off
+
+    # Railways manages https for us, enabling this may cause issues
+    auto_https off
+
+    # Set runtime logs
+    log {
+	# Set console-mode format for runtime logs
+        format console
+    }
+    
+    # Define server options
+    servers {
+	# Trust Railway Proxy
+        trusted_proxies static private_ranges
+    }
+}
+
+# Site Configuration Block
+# Listen to $PORT environ.var automatically assigned by Railway
+:{$PORT} {
+
+    # Set access logs
+    log {
+	# Set console-mode format for access logs
+        format console
+    }
+
+    # Proxy all request for /* to the frontend.
+    # Be sure to configure this variable in the service settings...
+    reverse_proxy {$SERVICE_LANDING}
+
+    # Proxy all the request for /notebooks to the jupyter-notebooks service
+    # The handle_path directive will string the base pattern from the path before proxying. 
+    handle_path /notebooks/* {
+        reverse_proxy {$SERVICE_NOTEBOOKS}
+    }
+}
