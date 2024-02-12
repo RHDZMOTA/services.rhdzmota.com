@@ -41,5 +41,5 @@
 
     # Proxy all request for /* to the frontend.
     # Be sure to configure this variable in the service settings...
-    reverse_proxy {$SERVICE_LANDING}
+    #reverse_proxy {$SERVICE_LANDING}
 }
