@@ -35,9 +35,10 @@
 
     # Proxy all the request for /notebooks to the jupyter-notebooks service
     # The handle_path directive will string the base pattern from the path before proxying. 
-    handle_path /notebooks/* {
-        reverse_proxy {$SERVICE_NOTEBOOKS}
-    }
+    #handle_path /notebooks/* {
+    #    reverse_proxy {$SERVICE_NOTEBOOKS}
+    #}
+    reverse_proxy /jupyter* {$SERVICE_NOTEBOOKS}
 
     # Proxy all request for /* to the frontend.
     # Be sure to configure this variable in the service settings...
