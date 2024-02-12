@@ -1,4 +1,4 @@
-user  nginx;
+user nginx;
 
 # Automatically adjust the number of Nginx worker processes based on available cores.
 worker_processes auto;
@@ -32,34 +32,34 @@ http {
     client_max_body_size 50M;
 
     # DNS Resolver: 8.8.8.8 (Google) for public dns lookups & fd12::10 for private dns lookups
-    resolver [fd12::10];
+    #resolver [fd12::10];
 
-    server {
-	listen ${PORT};
-        listen [::]:${PORT};
-	server_name localhost;
-        #server_name rhdzmota-notebooks.up.railway.app;
-        
-	location /notebooks {
-	    #set $rhdzmota_server_notebooks rhdzmota-notebooks.railway.internal;
-	    set $rhdzmota_server_notebooks rhdzmota-notebooks;
-	    proxy_set_header X-Real-IP $remote_addr;
-	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-	    proxy_set_header Host $http_host;
-	    proxy_set_header X-Nginx-Proxy true;
-	    proxy_set_header Upgrade $http_upgrade;
-	    proxy_set_header Connection "Upgrade";
-	    proxy_set_header Host $host;
-	    proxy_read_timeout 86400;
-	    proxy_http_version 1.1;
-	    proxy_pass http://$rhdzmota_server_notebooks;
-	}
-    }
+    #server {
+    #    listen ${PORT};
+    #    listen [::]:${PORT};
+    #    server_name localhost;
+    #    #server_name rhdzmota-notebooks.up.railway.app;
+    #    
+    #    location /notebooks {
+    #        #set $rhdzmota_server_notebooks rhdzmota-notebooks.railway.internal;
+    #        set $rhdzmota_server_notebooks rhdzmota-notebooks;
+    #        proxy_set_header X-Real-IP $remote_addr;
+    #        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #        proxy_set_header Host $http_host;
+    #        proxy_set_header X-Nginx-Proxy true;
+    #        proxy_set_header Upgrade $http_upgrade;
+    #        proxy_set_header Connection "Upgrade";
+    #        proxy_set_header Host $host;
+    #        proxy_read_timeout 86400;
+    #        proxy_http_version 1.1;
+    #        proxy_pass http://$rhdzmota_server_notebooks;
+    #    }
+    #}
 
     server {
     	listen ${PORT};
         listen [::]:${PORT};
-        server_name test;
+        server_name localhost;
 	
 	root /usr/share/nginx/html;
 	index index.html;
